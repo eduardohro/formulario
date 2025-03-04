@@ -150,3 +150,21 @@ input:-webkit-autofill {
 .form-control[type="radio"] {
     accent-color: #6363f1;
 }
+
+@media screen and (max-width: 500px) {
+    #form_container {
+        width: 100%;
+        min-height: 100vh;
+        padding: 32px;
+    }
+
+    #input_container {
+        display: flex;
+        flex-direction: column;
+        gap: 38px;
+    }
+
+    .form-control[type="date"] {
+        background-color: #fff;
+    }
+}
