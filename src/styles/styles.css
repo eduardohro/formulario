@@ -20,6 +20,7 @@ body {
     background-color: #6366f1;
     display: flex;
     align-items: center;
+    justify-content: center;
     border: none;
     padding: 8px 12px;
     border-radius: 8px;
@@ -116,4 +117,36 @@ body {
 .input-field .password-icon:hover {
     cursor: pointer;
     color: #676770;
+}
+
+.form-control:focus {
+    outline: none;
+}
+
+.input-box .input-field:focus-within {
+    outline: 2px solid #6366f1;
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px white inset !important;
+    color: #000;
+}
+
+.radio_container {
+    grid-column: span 2;
+}
+
+#gender_inputs {
+    display: flex;
+    gap: 20px;
+}
+
+.radio-box {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.form-control[type="radio"] {
+    accent-color: #6363f1;
 }
