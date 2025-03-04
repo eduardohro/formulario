@@ -24,7 +24,7 @@ body {
     border: none;
     padding: 8px 12px;
     border-radius: 8px;
-    font-size: 15px;
+    font-size: 18px;
     font-weight: 500;
     color: #ffffff;
     cursor: pointer;
@@ -86,7 +86,7 @@ body {
 }
 
 .form-label {
-    font-size: 12px;
+    font-size: 16px;
     color: #404044;
     font-weight: 500;
 }
@@ -149,6 +149,13 @@ input:-webkit-autofill {
 
 .form-control[type="radio"] {
     accent-color: #6363f1;
+}
+
+.error {
+    color: #dc2626;
+    font-size: 12px;
+    margin-top: 4px;
+    max-width: 200px;
 }
 
 @media screen and (max-width: 500px) {
