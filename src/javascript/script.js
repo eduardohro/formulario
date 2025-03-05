@@ -3,24 +3,41 @@ const form = document.querySelector('#form');
 form.addEventListener('submit', function (e) {
     e.preventDefault();
 
+    const fields = [
+        {
+            id: 'name',
+            label: 'Nome',
+            validator: nameIsValid,
+        },
+        {
+            id: 'last_name',
+            label: 'Sobrenome',
+            validator: nameIsValid,
+        },
+    ]
+
     const errorIcon = '<i class="fa-solid fa-circle-exclamation"></i>';
 
-    const name = document.querySelector('#name');
-    const inputBox = name.closest('.input-box');
-    const nameValue = name.value;
-    
-    const errorSpan = inputBox.querySelector('.error');
-    errorSpan.innerHTML = '';
+    fields.forEach(function (field) {
+        const input = document.getElementById(field.id);
+        const inputBox = input.closest('.input-box');
+        const inputValue = input.value;
+        
+        const errorSpan = inputBox.querySelector('.error');
+        errorSpan.innerHTML = '';
 
-    inputBox.classList.remove('invalid');
-    inputBox.classList.add('valid');
+        inputBox.classList.remove('invalid');
+        inputBox.classList.add('valid');
 
-    if (!nameIsValid(nameValue).isValid) {
-        errorSpan.innerHTML = `${errorIcon} ${nameIsValid(nameValue).errorMessage}`;
-        inputBox.classList.add('invalid');
-        inputBox.classList.remove('valid');
-        return;
-    }
+        const fieldValidator = field.validator(inputValue);
+
+        if (!fieldValidator.isValid) {
+            errorSpan.innerHTML = `${errorIcon} ${fieldValidator.errorMessage}`;
+            inputBox.classList.add('invalid');
+            inputBox.classList.remove('valid');
+            return;
+        }
+    })
 })
 
 function isEmpty(value) {
@@ -46,10 +63,10 @@ function nameIsValid(value) {
         return validator;
     }
 
-    const regex = /^[a-zA-Z]/;
-    if (regex.test(value)) {
+    const regex = /^[a-zA-Z]+$/;
+    if (!regex.test(value)) {
         validator.isValid = false;
-        validator.errorMessage = 'O campo deve conter apenas letras.'
+        validator.errorMessage = 'O campo deve conter apenas letras.';
     }
 
     return validator;
