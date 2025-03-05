@@ -24,6 +24,16 @@ form.addEventListener('submit', function (e) {
             label: 'E-mail',
             validator: emailIsValid,
         },
+        {
+            id: 'password',
+            label: 'Senha',
+            validator: passwordIsSecure,
+        },
+        {
+            id: 'confirm_password',
+            label: 'Confirmar senha',
+            validator: passwordMatch,
+        },
     ]
 
     const errorIcon = '<i class="fa-solid fa-circle-exclamation"></i>';
@@ -62,21 +72,21 @@ function nameIsValid(value) {
 
     if (isEmpty(value)) {
         validator.isValid = false;
-        validator.errorMessage = 'O campo é obrigatório.';
+        validator.errorMessage = 'O campo é obrigatório!';
         return validator;
     }
 
     const min = 3;
     if (value.length < min) {
         validator.isValid = false;
-        validator.errorMessage = `O nome deve ter no mínimo ${min} caracteres.`;
+        validator.errorMessage = `O nome deve ter no mínimo ${min} caracteres!`;
         return validator;
     }
 
     const regex = /^[a-zA-Z]+$/;
     if (!regex.test(value)) {
         validator.isValid = false;
-        validator.errorMessage = 'O campo deve conter apenas letras.';
+        validator.errorMessage = 'O campo deve conter apenas letras!';
     }
 
     return validator;
@@ -90,7 +100,7 @@ function dateIsValid(value) {
 
     if (isEmpty(value)) {
         validator.isValid = false;
-        validator.errorMessage = 'O nascimento é obrigatório.';
+        validator.errorMessage = 'O nascimento é obrigatório!';
         return validator;
     }
 
@@ -98,7 +108,7 @@ function dateIsValid(value) {
 
     if (year < 1920 || year > new Date().getFullYear()) {
         validator.isValid = false;
-        validator.errorMessage = 'Data inválida.';
+        validator.errorMessage = 'Data inválida!';
         return validator;
     }
 
@@ -113,7 +123,7 @@ function emailIsValid(value) {
 
     if (isEmpty(value)) {
         validator.isValid = false;
-        validator.errorMessage = 'O e-mail é obrigatório.';
+        validator.errorMessage = 'O e-mail é obrigatório!';
         return validator;
     }
 
@@ -121,6 +131,53 @@ function emailIsValid(value) {
     if (!regex.test(value)) {
         validator.isValid = false;
         validator.errorMessage = 'O e-mail precisa ser válido!';
+        return validator;
+    }
+
+    return validator;
+}
+
+function passwordIsSecure(value) {
+    const validator = {
+        isValid: true,
+        errorMessage: null
+    }
+
+    if (isEmpty(value)) {
+        validator.isValid = false;
+        validator.errorMessage = 'A senha é obrigatória!';
+        return validator;
+    }
+
+    const regex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\\$%\\^&\\*]).{8,}$");
+
+    if (!regex.test(value)) {
+        validator.isValid = false;
+        validator.errorMessage = `
+            Sua senha deve ter ao menos: <br/>
+            8 dígitos <br/>
+            1 letra minúscula <br/>
+            1 letra maiúscula <br/>
+            1 número <br/>
+            1 caractere especial!    
+        `;
+        return validator;
+    }
+
+    return validator;
+}
+
+function passwordMatch(value) {
+    const validator = {
+        isValid: true,
+        errorMessage: null
+    }
+
+    const passwordValue = document.getElementById('password').value;
+
+    if (value === '' || passwordValue !== value) {
+        validator.isValid = false;
+        validator.errorMessage = 'Senhas não condizem!';
         return validator;
     }
 
