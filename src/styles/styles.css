@@ -132,7 +132,7 @@ input:-webkit-autofill {
     color: #000;
 }
 
-.radio_container {
+.radio-container {
     grid-column: span 2;
 }
 
@@ -172,6 +172,14 @@ input:-webkit-autofill {
 
 .input-box.valid .input-field {
     border: 1px solid #22c55e;
+}
+
+.radio-container.invalid .form-label:first-child {
+    color: #dc2626;
+}
+
+.radio-container.valid .form-label:first-child {
+    color: #22c55e;
 }
 
 @media screen and (max-width: 500px) {

@@ -58,6 +58,22 @@ form.addEventListener('submit', function (e) {
             return;
         }
     })
+
+    const genders = document.getElementsByName('gender');
+    const radioContainer = document.querySelector('.radio-container');
+    const genderErrorSpan = radioContainer.querySelector('.error');
+
+    const selectedGender = [...genders].find(input => input.checked);
+    radioContainer.classList.add('invalid');
+    radioContainer.classList.remove('valid');
+    genderErrorSpan.innerHTML = `${errorIcon} Selecione um gênero!`
+
+    if (selectedGender) {
+        radioContainer.classList.add('valid');
+        radioContainer.classList.remove('invalid');
+        genderErrorSpan.innerHTML = '';
+        return;
+    }
 })
 
 function isEmpty(value) {
