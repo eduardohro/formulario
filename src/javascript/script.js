@@ -14,6 +14,16 @@ form.addEventListener('submit', function (e) {
             label: 'Sobrenome',
             validator: nameIsValid,
         },
+        {
+            id: 'birthdate',
+            label: 'Nascimento',
+            validator: dateIsValid,
+        },
+        {
+            id: 'email',
+            label: 'E-mail',
+            validator: emailIsValid,
+        },
     ]
 
     const errorIcon = '<i class="fa-solid fa-circle-exclamation"></i>';
@@ -52,7 +62,7 @@ function nameIsValid(value) {
 
     if (isEmpty(value)) {
         validator.isValid = false;
-        validator.errorMessage = 'O campo é obrigatório';
+        validator.errorMessage = 'O campo é obrigatório.';
         return validator;
     }
 
@@ -67,6 +77,51 @@ function nameIsValid(value) {
     if (!regex.test(value)) {
         validator.isValid = false;
         validator.errorMessage = 'O campo deve conter apenas letras.';
+    }
+
+    return validator;
+}
+
+function dateIsValid(value) {
+    const validator = {
+        isValid: true,
+        errorMessage: null
+    }
+
+    if (isEmpty(value)) {
+        validator.isValid = false;
+        validator.errorMessage = 'O nascimento é obrigatório.';
+        return validator;
+    }
+
+    const year = new Date(value).getFullYear();
+
+    if (year < 1920 || year > new Date().getFullYear()) {
+        validator.isValid = false;
+        validator.errorMessage = 'Data inválida.';
+        return validator;
+    }
+
+    return validator;
+}
+
+function emailIsValid(value) {
+    const validator = {
+        isValid: true,
+        errorMessage: null
+    }
+
+    if (isEmpty(value)) {
+        validator.isValid = false;
+        validator.errorMessage = 'O e-mail é obrigatório.';
+        return validator;
+    }
+
+    const regex = new RegExp("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$");
+    if (!regex.test(value)) {
+        validator.isValid = false;
+        validator.errorMessage = 'O e-mail precisa ser válido!';
+        return validator;
     }
 
     return validator;
